@@ -1,0 +1,43 @@
+@model WebAppStudent.Models.Attendance
+
+@{
+    ViewData["Title"] = "Hapus Kehadiran";
+}
+
+<h2>Hapus Kehadiran</h2>
+<h3>Apakah Anda yakin ingin menghapus kehadiran ini?</h3>
+<div>
+    <h4>Siswa</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Nama
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Date
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2">
+            Notes
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Hapus" class="btn btn-danger" /> |
+        <a asp-action="Index">Kembali ke Daftar</a>
+    </form>
+</div>

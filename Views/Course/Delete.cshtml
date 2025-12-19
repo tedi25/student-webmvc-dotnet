@@ -1,0 +1,22 @@
+@model WebAppStudent.Models.Course
+
+@{
+    ViewData["Title"] = "Hapus Course";
+}
+
+<h2>Hapus Course</h2>
+
+<div class="alert alert-danger">
+    Apakah Anda yakin ingin menghapus course ini?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Nama</dt>
+    <dd class="col-sm-10">@Model.CourseName</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Hapus</button>
+    <a asp-action="Index" class="btn btn-secondary">Batal</a>
+</form>

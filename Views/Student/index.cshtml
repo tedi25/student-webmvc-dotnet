@@ -1,0 +1,70 @@
+@model IEnumerable<WebAppStudent.Models.Student>
+
+@{
+    ViewData["Title"] = "Daftar Siswa";
+}
+
+<h2>Daftar Siswa</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Tambah Siswa Baru</a>
+</p>
+
+<form asp-action="Index" method="get" class="row mb-3">
+    <div class="col-md-4">
+        <input type="text" name="keyword" class="form-control" value="@Context.Request.Query["keyword"]"
+            placeholder="Cari nama atau email..." />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">
+            Cari
+        </button>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>Usia</th>
+            <th>Course</th>
+            <th style="width:140px">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.Age</td>
+                <td>
+                    @if (item.StudentCourses.Any())
+                    {
+                        <ul class="mb-0">
+                            @foreach (var sc in item.StudentCourses)
+                            {
+                                <li>@sc.Course.CourseName</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span class="text-muted fst-italic">
+                            Belum mengambil course
+                        </span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                        Hapus
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

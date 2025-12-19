@@ -1,0 +1,60 @@
+@model WebAppStudent.Models.Student
+
+@{
+    ViewData["Title"] = "Hapus Siswa";
+}
+
+<h2 class="text-danger">Hapus Siswa</h2>
+<p class="fw-bold">Apakah Anda yakin ingin menghapus siswa ini?</p>
+
+<hr />
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <dl class="row">
+            <dt class="col-sm-3">Nama</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Usia</dt>
+            <dd class="col-sm-9">@Model.Age</dd>
+        </dl>
+
+        <hr />
+
+        <h5>Course yang diambil</h5>
+
+        @if (Model.StudentCourses != null && Model.StudentCourses.Any())
+        {
+            <ul class="list-group mb-3">
+                @foreach (var sc in Model.StudentCourses)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @sc.Course.CourseName
+                        <span class="badge bg-secondary">Course</span>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted fst-italic">
+                Siswa ini belum mengambil course apa pun.
+            </p>
+        }
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <button type="submit" class="btn btn-danger">
+                Hapus Siswa
+            </button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">
+                Batal
+            </a>
+        </form>
+    </div>
+</div>
