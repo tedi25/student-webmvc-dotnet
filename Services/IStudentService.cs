@@ -14,4 +14,7 @@ public interface IStudentService
 
     Task<Student?> GetDeleteAsync(int id);
     Task DeleteAsync(int id);
+
+    Task PatchAsync(int id, StudentPatchDTOVM vm);
+
 }

@@ -131,4 +131,42 @@ public class StudentService : IStudentService
         _context.Students.Remove(student);
         await _context.SaveChangesAsync();
     }
+
+    public async Task PatchAsync(int id, StudentPatchDTOVM vm)
+    {
+        var student = await _context.Students
+            .Include(s => s.StudentCourses)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (student == null)
+            throw new KeyNotFoundException("Student not found");
+
+        // update field yang dikirim saja
+        if (vm.Name != null)
+            student.Name = vm.Name;
+
+        if (vm.Email != null)
+            student.Email = vm.Email;
+
+        if (vm.Age.HasValue)
+            student.Age = vm.Age.Value;
+
+        // update course (optional)
+        if (vm.CourseIds != null)
+        {
+            student.StudentCourses.Clear();
+
+            foreach (var courseId in vm.CourseIds)
+            {
+                student.StudentCourses.Add(new StudentCourse
+                {
+                    StudentId = student.Id,
+                    CourseId = courseId
+                });
+            }
+        }
+
+        await _context.SaveChangesAsync();
+    }
+
 }

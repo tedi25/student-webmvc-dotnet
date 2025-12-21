@@ -100,6 +100,26 @@ namespace WebAppStudent.Controllers.Api
             await _studentService.DeleteAsync(id);
             return NoContent();
         }
+
+        // PATCH: api/v1/StudentsApi/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchStudent(int id, [FromBody] StudentPatchDTOVM vm)
+        {
+            if (vm == null)
+                return BadRequest();
+
+            try
+            {
+                await _studentService.PatchAsync(id, vm);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
     }
 
 
