@@ -12,8 +12,19 @@ throw new InvalidOperationException("Connection string 'DefaultConnection' not f
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(connectionString)); // Gunakan UseSqlServer untuk SQL Server
-// Hapus baris ini jika Anda sudah tidak menggunakan StudentService in-memory
-// builder.Services.AddScoped<IStudentService, StudentService>();
+
+
+// Konfigurasi CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5109") // Ganti dengan URL Blazor Client Anda
+    .AllowAnyHeader()
+    .AllowAnyMethod();
+
+    });
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -98,6 +109,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors();
 
 app.UseAuthorization();
 app.MapControllers();
